@@ -1,0 +1,68 @@
+USE TENNIS_DATA;
+
+DESCRIBE Categories;
+
+ALTER TABLE Categories
+MODIFY COLUMN category_id VARCHAR(50) PRIMARY KEY,
+MODIFY COLUMN category_name VARCHAR(100) NOT NULL;
+
+DESCRIBE Competitions;
+
+ALTER TABLE Competitions
+MODIFY COLUMN competition_id VARCHAR(50) PRIMARY KEY,
+MODIFY COLUMN competition_name VARCHAR(100) NOT NULL,
+MODIFY COLUMN parent_id VARCHAR(50) NULL,
+MODIFY COLUMN type VARCHAR(20) NOT NULL,
+MODIFY COLUMN gender VARCHAR(10) NOT NULL,
+MODIFY COLUMN category_id VARCHAR(50);
+
+-- Add foreign key constraint 
+ALTER TABLE Competitions
+ADD FOREIGN KEY (category_id) REFERENCES Categories(category_id);
+
+DESCRIBE Complexes;
+
+ALTER TABLE Complexes
+MODIFY COLUMN complex_id VARCHAR(50) PRIMARY KEY,
+MODIFY COLUMN complex_name VARCHAR(100) NOT NULL;
+
+DESCRIBE Venues;
+
+ALTER TABLE Venues
+MODIFY COLUMN venue_id VARCHAR(50) PRIMARY KEY,
+MODIFY COLUMN venue_name VARCHAR(100) NOT NULL,
+MODIFY COLUMN city_name VARCHAR(100) NOT NULL,
+MODIFY COLUMN country_name VARCHAR(100) NOT NULL,
+MODIFY COLUMN country_code CHAR(3) NOT NULL,
+MODIFY COLUMN timezone VARCHAR(100) NOT NULL,
+MODIFY COLUMN complex_id VARCHAR(50);
+
+-- Add foreign key constraint
+ALTER TABLE Venues
+ADD FOREIGN KEY (complex_id) REFERENCES Complexes(complex_id);
+
+DESCRIBE Competitor_Rankings;
+
+ALTER TABLE Competitor_Rankings
+MODIFY COLUMN rank_id INT AUTO_INCREMENT PRIMARY KEY,
+MODIFY COLUMN rank INT NOT NULL,
+MODIFY COLUMN movement INT NOT NULL,
+MODIFY COLUMN points INT NOT NULL,
+MODIFY COLUMN competitions_played INT NOT NULL,
+MODIFY COLUMN competitor_id VARCHAR(50);
+
+DESCRIBE Competitors;
+
+ALTER TABLE Competitors
+MODIFY COLUMN competitor_id VARCHAR(50) PRIMARY KEY,
+MODIFY COLUMN name VARCHAR(100) NOT NULL,
+MODIFY COLUMN country VARCHAR(100) NOT NULL,
+MODIFY COLUMN country_code CHAR(3) NOT NULL,
+MODIFY COLUMN abbreviation VARCHAR(10) NOT NULL;
+
+-- Add foreign key constraint
+ALTER TABLE Competitor_Rankings
+ADD FOREIGN KEY (competitor_id) REFERENCES Competitors(competitor_id);
+
+
+
